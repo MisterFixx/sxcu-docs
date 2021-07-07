@@ -1,6 +1,6 @@
 # Introduction
 You've found the sxcu.net API documentation! These pages are dedicated to showing you all the ways that you can use sxcu.net to make cool stuff.
-All of our [documentation is on GitHub](https://github.com/MisterFixx/sxcu-docs), so feel free to submuit corrections and improvements!
+All of our [documentation is on GitHub](https://github.com/MisterFixx/sxcu-docs), so feel free to submit corrections and improvements!
 
 ## Bugs
 If you believe you're experiencing a bug with our API or want to report incorrect documentation, open an issue on our [issue tracker](https://github.com/MisterFixx/sxcu-docs/issues).
@@ -8,7 +8,7 @@ If you believe you're experiencing a bug with our API or want to report incorrec
 ## Still need some help?
 Join the [Official Discord server](https://discord.gg/Yuf6ukX) for support and discussion regarding sxcu.net's APIs.
 
-# API Referance
+# API Reference
 ## Base URL
 ```text
 https://sxcu.net/api
@@ -17,7 +17,7 @@ https://sxcu.net/api
 Clients using the HTTP API must provide a valid [User Agent](https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.43) which specifies information about the client library and version in the following format:
 ### User Agent Example
 ```text
-User-Agent: sxcuUploader ($url, $versionNumber)
+User-Agent: sxcuUploader/$versionNumber $url
 ```
 Clients may append more information and metadata to the end of this string as they wish.
 
@@ -74,7 +74,7 @@ Sequence    | 13 to 0  | 14 bits        | This number is incremented for every I
 ### Convert Snowflake to DateTime
 ![Graphical representation of how a Snowflake is constructed](https://sxcu.net/assets/img/53fMTmLR4.png)
 
-## API error referance
+## API error reference
 sxcu.net uses internal error codes and an HTTP status code of 400 for any API error, instead of HTTP status codes. This gives us the ability to assign a unique code to each error, instead of having to reuse codes from a narrow selection of HTTP status codes.
 
 ### Table of errors
