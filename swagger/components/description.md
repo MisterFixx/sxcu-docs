@@ -135,19 +135,22 @@ All endpoints no longer return different status codes for different errors, inst
 [Added a new endpoint](#get-/subdomains/check/-subdomain-)
 
 #### Files
-/upload -> URL changed to [api/files/create](#post-/files/create)  
+/upload  
+&nbsp;&nbsp;&nbsp;&nbsp;URL changed to [/api/files/create](#post-/files/create)  
+&nbsp;&nbsp;&nbsp;&nbsp;`image` field changed to `file`  
+<br>  
 sxcu.net/{ID}.json -> URL changed to [/api/files/{fileId}](#get-/files/-fileId-)  
 /d/{fileId}/{deletionToken} -> URL changed to [/api/files/delete/{fileId}/{deletionToken}](#get-/files/delete/-fileId-/-deletionToken-)   
 
 #### Collections
 sxcu.net/c/{CollectionId}.json  
-&nbsp;&nbsp;&nbsp;&nbsp;URL changed to [api/collections/{collectionId}](#get-/collection/-collectionId-)  
+&nbsp;&nbsp;&nbsp;&nbsp;URL changed to [/api/collections/{collectionId}](#get-/collection/-collectionId-)  
 &nbsp;&nbsp;&nbsp;&nbsp;Field `img_views` changed to `file_views`  
 &nbsp;&nbsp;&nbsp;&nbsp;Field `images` changed to `files`  
 <br>
-Collection creation endpoint URL changed to [api/collections/create](#post-/collections/create)  
-Collection edit endpoint URL changed to [api/collections/edit/{collectionId}](#post-/collections/edit/-collectionId-)  
+Collection creation endpoint URL changed to [/api/collections/create](#post-/collections/create)  
+Collection edit endpoint URL changed to [/api/collections/edit/{collectionId}](#post-/collections/edit/-collectionId-)  
 
 #### Links
-/shorten -> URL changed to [api/links/create](#post-/links/create)  
+/shorten -> URL changed to [/api/links/create](#post-/links/create)  
 /d/{linkId}/{deletionToken} -> URL changed to [/api/links/delete/{linkId}/{deletionToken}](#get-/links/delete/-linkId-/-deletionToken-)     
