@@ -24,26 +24,5 @@
    ],
    "paths":{
       {{paths}}
-   },
-   "definitions":{ 
-      "Subdomain":{
-         "type":"object",
-         "properties":{
-            "domain":{
-               "type":"string"
-            },
-            "upload_count":{
-               "type":"integer",
-               "format":"int32"
-            },
-            "public":{
-               "type":"boolean"
-            },
-            "file_views":{
-               "type":"integer",
-               "format":"int64"
-            }
-         }
-      }
    }
 }
