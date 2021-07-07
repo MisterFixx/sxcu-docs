@@ -1,0 +1,65 @@
+"/subdomains/check/{subdomain}":{
+   "get":{
+      "tags":[
+         "Subdomains"
+      ],
+      "summary":"Check if subdomain exists",
+      "description":"Check if a subdomain is already regisetered on sxcu.net",
+      "operationId":"checkSubdomain",
+      "consumes":[
+         "text/plain; charset=utf-8"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         {
+            "name":"subdomain",
+            "in":"path",
+            "description":"The subdomain to check",
+            "required":true,
+            "type":"string",
+            "x--nullable":false
+         }
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "exists":{
+                     "type":"boolean",
+                     "description":"Whether the subdomain exists or not",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         }
+      },
+      "security":[
+         
+      ]
+   }
+}

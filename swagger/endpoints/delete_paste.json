@@ -1,0 +1,73 @@
+"https://cancer-co.de/d/{pasteId}/{deletionToken}":{
+   "get":{
+      "tags":[
+         "Text"
+      ],
+      "summary":"Delete cancer-co.de paste",
+      "description":"Delete a paste from cancer-co.de",
+      "operationId":"deletePaste",
+      "consumes":[
+         "text/plain; charset=utf-8"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         {
+            "name":"pasteId",
+            "in":"path",
+            "description":"The ID of the paste",
+            "required":true,
+            "type":"snowflake",
+            "x--nullable":false
+         },
+         {
+            "name":"deletionToken",
+            "in":"path",
+            "description":"The deletion token for the paste",
+            "required":true,
+            "type":"string",
+            "x--nullable":false
+         }
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "message":{
+                     "type":"string",
+                     "description":"Success status message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         }
+      },
+      "security":[
+         
+      ]
+   }
+}

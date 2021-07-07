@@ -1,0 +1,73 @@
+"/links/create":{
+   "post":{
+      "tags":[
+         "Links"
+      ],
+      "summary":"Create a new link redirect",
+      "description":"",
+      "operationId":"createLink",
+      "consumes":[
+         "application/x-www-form-urlencoded"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         {
+            "name":"link",
+            "in":"formData",
+            "description":"The link to redirect.",
+            "required":true,
+            "type":"string",
+            "format":"url",
+            "x--nullable": false,
+            "maxLength": 1500
+         }
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "url":{
+                     "type":"string",
+                     "format":"url",
+                     "description":"The created link",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "del_url":{
+                     "type":"string", 
+                     "format":"url",
+                     "description":"Deletion url for that link", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 }
+               }
+            }
+         }
+      },
+      "security":[]
+   }
+}

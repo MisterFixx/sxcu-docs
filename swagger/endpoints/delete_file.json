@@ -1,0 +1,73 @@
+"/files/delete/{fileId}/{deletionToken}":{
+   "get":{
+      "tags":[
+         "Files"
+      ],
+      "summary":"Delete file",
+      "description":"Delete a file from sxcu.net",
+      "operationId":"deleteFile",
+      "consumes":[
+         "text/plain; charset=utf-8"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         {
+            "name":"fileId",
+            "in":"path",
+            "description":"The ID of the file",
+            "required":true,
+            "type":"snowflake",
+            "x--nullable":false
+         },
+         {
+            "name":"deletionToken",
+            "in":"path",
+            "description":"The deletion token for the file",
+            "required":true,
+            "type":"string",
+            "x--nullable":false
+         }
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "message":{
+                     "type":"string",
+                     "description":"Success status message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         }
+      },
+      "security":[
+         
+      ]
+   }
+}

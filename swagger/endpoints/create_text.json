@@ -1,0 +1,72 @@
+"https://cancer-co.de/upload":{
+   "post":{
+      "tags":[
+         "Text"
+      ],
+      "summary":"Create a new cancer-co.de paste",
+      "description":"Create a new text document via cancer-co.de",
+      "operationId":"createText",
+      "consumes":[
+         "application/x-www-form-urlencoded"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         {
+            "name":"text",
+            "in":"formData",
+            "description":"Text to upload",
+            "required":true,
+            "type":"string",
+            "x--nullable": false,
+            "maxLength": 8000000
+         }
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "url":{
+                     "type":"string",
+                     "format":"url",
+                     "description":"The created document",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "del_url":{
+                     "type":"string", 
+                     "format":"url",
+                     "description":"Deletion url for that document", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 }
+               }
+            }
+         }
+      },
+      "security":[]
+   }
+}

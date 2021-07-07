@@ -1,0 +1,95 @@
+"/collections/create":{
+   "post":{
+      "tags":[
+         "Collections"
+      ],
+      "summary":"Create a new collection",
+      "description":"",
+      "operationId":"createCollection",
+      "consumes":[
+         "application/x-www-form-urlencoded"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         {
+            "name":"title",
+            "in":"formData",
+            "description":"The title of the collection being created.",
+            "required":true,
+            "type":"string",
+            "x--nullable": false,
+            "maxLength": 250
+         },
+         {
+            "name":"desc",
+            "in":"formData",
+            "description":"Description of the collection being created",
+            "required":false,
+            "type":"string",
+            "x--nullable": false,
+            "maxLength": 2000
+         },
+         {
+            "name":"private",
+            "in":"formData",
+            "description":"Whether the collection should be private or not",
+            "required":true,
+            "type":"boolean",
+            "x--nullable": false
+         },
+         {
+            "name":"unlisted",
+            "in":"formData",
+            "description":"Whether the collection should be unlisted or not.",
+            "required":true,
+            "type":"string",
+            "x--nullable": false
+         }
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "collection_id":{
+                     "type":"snowflake",
+                     "description":"Collection's ID",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "collection_token":{
+                     "type":"string",
+                     "description":"Collection's upload token, will be present if `private` is set to `true` in the request", 
+                     "x--optional":true,
+                     "x--nullable":false 
+                 }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 }
+               }
+            }
+         }
+      },
+      "security":[]
+   }
+}

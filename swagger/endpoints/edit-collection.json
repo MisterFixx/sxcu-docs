@@ -1,0 +1,129 @@
+"/collections/edit/{collectionId}":{
+   "post":{
+      "tags":[
+         "Collections"
+      ],
+      "summary":"Edit collection",
+      "description":"Edit collection properties",
+      "operationId":"editCollection",
+      "consumes":[
+         "multipart/x-www-form-urlencoded"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         {
+            "name":"collectionId",
+            "in":"path",
+            "description":"Collection's ID",
+            "required":true,
+            "type":"snowflake",
+            "x--nullable":false
+         },
+         {
+            "name":"collection_token",
+            "in":"formData",
+            "description":"Collection's token",
+            "required":true,
+            "type":"string",
+            "x--nullable":false
+         },
+         {
+            "name":"title",
+            "in":"formData",
+            "description":"Collection's new title",
+            "required":false,
+            "type":"string",
+            "x--nullable":false,
+            "maxLength": 250
+         },
+         {
+            "name":"desc",
+            "in":"formData",
+            "description":"Collection's new description",
+            "required":false,
+            "type":"string",
+            "x--nullable":false,
+            "maxLength": 2000
+         },
+         {
+            "name":"unlisted",
+            "in":"formData",
+            "type":"boolean",
+            "description":"Collection's new unlisted status",
+            "required":false,
+            "x--nullable":false
+         },
+         {
+            "name":"regen_token",
+            "in":"formData",
+            "type":"void",
+            "description":"If present, will re-assign the collection a new upload token, and return it in the response",
+            "required":false,
+            "x--nullable":false
+         },
+         {
+            "name":"empty_collection",
+            "in":"formData",
+            "type":"void",
+            "description":"If present, will disassociate all files in collection from it, leaving the collection empty",
+            "required":false,
+            "x--nullable":false
+         },
+         {
+            "name":"delete_collection",
+            "in":"formData",
+            "type":"void",
+            "description":"If present, will disassociate all files in collection from it, and delete the collection.",
+            "required":false,
+            "x--nullable":false
+         }
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "success":{
+                     "type":"boolean",
+                     "description":"Sent to avoid sending an empty body",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "token":{
+                     "type":"string",
+                     "description":"Collection's new token",
+                     "x--optional":true,
+                     "x--nullable":false
+                  }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         }
+      },
+      "security":[
+         
+      ]
+   }
+}

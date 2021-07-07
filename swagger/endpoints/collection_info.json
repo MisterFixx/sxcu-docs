@@ -1,0 +1,136 @@
+"/collections/{collectionId}":{
+   "get":{
+      "tags":[
+         "Collections"
+      ],
+      "summary":"Get collection meta",
+      "description":"Returns meta info about a collection.",
+      "operationId":"getCollection",
+      "consumes":[
+         "text/plain; charset=utf-8"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         {
+            "name":"collectionId",
+            "in":"path",
+            "description":"The ID of the collection",
+            "required":true,
+            "type":"snowflake",
+            "x--nullable": false
+         }
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "id":{
+                     "type":"snowflake",
+                     "description":"Collection's ID",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "title":{
+                     "type":"string",
+                     "description":"Collection title", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 },
+                  "desc":{
+                     "type":"string",
+                     "description":"Collection description", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 },
+                  "views":{
+                     "type":"integer",
+                     "description":"Collection view count", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 },
+                  "creation_time":{
+                     "type":"integer",
+                     "format":"int64",
+                     "description":"Unix timestamp of when the collection was created", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 },
+                  "public":{
+                     "type":"boolean",
+                     "description":"Whether the collection is public or not", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 },
+                  "unlisted":{
+                     "type":"boolean",
+                     "description":"Whether the collection is unlisted or not", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 },
+                  "file_views":{
+                     "type":"integer",
+                     "description":"Amount of views all of the files in the collection got", 
+                     "x--optional":false,
+                     "x--nullable":false 
+                 },
+                  "files":{
+                     "type":"array",
+                     "description":"Array of files in collection", 
+                     "x--optional":false,
+                     "x--nullable":false,
+                     "items":{
+                         "type":"object",
+                         "properties":{
+                             "url":{
+                                 "type":"string",
+                                 "format":"url",
+                                 "description": "URL of the file"
+                             },
+                             "thumb":{
+                                 "type":"string",
+                                 "format":"url",
+                                 "description": "Thumbnail URL of the file"
+                             },
+                             "upload_time":{
+                                 "type":"integer",
+                                 "format":"int64",
+                                 "description": "Time of upload of the file"
+                             },
+                             "views":{
+                                 "type":"integer",
+                                 "description": "Views the file accumulated"
+                             }
+                         }
+                     } 
+                 }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         }
+      },
+      "security":[]
+   }
+}

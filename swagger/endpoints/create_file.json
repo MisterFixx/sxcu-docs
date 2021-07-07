@@ -1,0 +1,113 @@
+"/files/create":{
+   "post":{
+      "tags":[
+         "Files"
+      ],
+      "summary":"Upload new file",
+      "description":"Upload a new file to sxcu.net.<br>Max file size: 95 MB<br>Allowed file types: [png, gif, jpeg, ico, bmp, tiff, webm]",
+      "operationId":"createFile",
+      "consumes":[
+         "multipart/x-www-form-urlencoded"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         {
+            "name":"file",
+            "in":"formData",
+            "description":"The file to be uploaded",
+            "required":true,
+            "type":"file",
+            "x--nullable":false
+         },
+         {
+            "name":"token",
+            "in":"formData",
+            "description":"Subdomain's upload token",
+            "required":false,
+            "type":"string",
+            "x--nullable":false
+         },
+         {
+            "name":"collection_token",
+            "in":"formData",
+            "description":"Collection's upload token",
+            "required":false,
+            "type":"string",
+            "x--nullable":false
+         },
+         {
+            "name":"noembed",
+            "in":"formData",
+            "description":"If present, will make the API respond with a url directly to the file instead of its page",
+            "required":false,
+            "type":"void",
+            "x--nullable":false
+         },
+         {
+            "name":"og_properties",
+            "in":"formData",
+            "type":"string",
+            "description":"{{ogp_description}}",
+            "required":false,
+            "x--nullable":false,
+            "maxLength": 250
+         }
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "url":{
+                     "type":"string",
+                     "format":"url",
+                     "description":"URL to the created file",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "del_url":{
+                     "type":"string",
+                     "format":"url",
+                     "description":"Deletion url for the created file",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "thumb":{
+                     "type":"string",
+                     "format":"url",
+                     "description":"Thumbnail URL for the created file",
+                     "x--optional":true,
+                     "x--nullable":false
+                  }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         }
+      },
+      "security":[
+         
+      ]
+   }
+}

@@ -1,0 +1,78 @@
+"/subdomains":{
+   "get":{
+      "tags":[
+         "Subdomains"
+      ],
+      "summary":"List subdomains",
+      "description":"",
+      "operationId":"listDomains",
+      "consumes":[
+         "text/plain; charset=utf-8"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "domain":{
+                     "type":"string",
+                     "description":"Subdomain name",
+                     "x--optional":false,
+                     "x--nullable":false                    
+                  },
+                  "upload_count":{
+                     "type":"integer",
+                     "format":"int32",
+                     "description":"Number of files uploaded to this subdomain",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "public":{
+                     "type":"boolean",
+                     "description":"Whether it's public or not",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "file_views":{
+                     "type":"integer",
+                     "format":"int64",
+                     "description":"Number of file views on this subdomain",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         }
+      },
+      "security":[
+         
+      ]
+   }
+}

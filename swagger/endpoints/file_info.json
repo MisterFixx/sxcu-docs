@@ -1,0 +1,135 @@
+"/files/{fileId}":{
+   "get":{
+      "tags":[
+         "Files"
+      ],
+      "summary":"Get file meta",
+      "description":"Returns meta info about a file.",
+      "operationId":"getFile",
+      "consumes":[
+         "text/plain; charset=utf-8"
+      ],
+      "produces":[
+         "application/json"
+      ],
+      "parameters":[
+         {
+            "name":"fileId",
+            "in":"path",
+            "description":"The ID of the file",
+            "required":true,
+            "type":"snowflake",
+            "x--nullable":false
+         }
+      ],
+      "responses":{
+         "200":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "id":{
+                     "type":"snowflake",
+                     "description":"Files's ID",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "url":{
+                     "type":"string",
+                     "format":"url",
+                     "description":"File's public URL",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "views":{
+                     "type":"integer",
+                     "description":"File's view count",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "viewable":{
+                     "type":"boolean",
+                     "description":"Whether file can still be viewed or not",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "collection":{
+                     "type":"snowflake",
+                     "description":"ID of a collection the file is associated with",
+                     "x--optional":false,
+                     "x--nullable":true
+                  },
+                  "size":{
+                     "type":"integer",
+                     "format":"int64",
+                     "description":"File size in bytes",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "creation_time":{
+                     "type":"integer",
+                     "format":"int64",
+                     "description":"Unix timestamp of when the file was created",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "og_properties":{
+                     "type":"array",
+                     "description":"OpenGraph properties for this file",
+                     "x--optional":true,
+                     "x--nullable":false,
+                     "items":{
+                        "type":"object",
+                        "properties":{
+                           "color":{
+                              "type":"string",
+                              "description":"OpenGraph HEX color code value",
+                              "x--optional":true
+                           },
+                           "title":{
+                              "type":"string",
+                              "description":"OpenGraph title value",
+                              "x--optional":true
+                           },
+                           "description":{
+                              "type":"string",
+                              "description":"OpenGraph description value",
+                              "x--optional":true
+                           },
+                           "discord_hide_url":{
+                              "type":"boolean",
+                              "description":"Whether to hide this file's url in Discord or not when sent",
+                              "x--optional":true
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "400":{
+            "description":"",
+            "schema":{
+               "type":"object",
+               "properties":{
+                  "error":{
+                     "type":"string",
+                     "description":"Error message",
+                     "x--optional":false,
+                     "x--nullable":false
+                  },
+                  "code":{
+                     "type":"integer",
+                     "description":"Error's internal code",
+                     "x--optional":false,
+                     "x--nullable":false
+                  }
+               }
+            }
+         }
+      },
+      "security":[
+         
+      ]
+   }
+}
