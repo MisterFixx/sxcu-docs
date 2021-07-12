@@ -17,7 +17,7 @@ https://sxcu.net/api
 Clients using the HTTP API must provide a valid [User Agent](https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.43) which specifies information about the client library and version in the following format:
 ### User Agent Example
 ```text
-User-Agent: sxcuUploader/$versionNumber $url
+User-Agent: sxcuUploader/$versionNumber (+$url)
 ```
 Clients may append more information and metadata to the end of this string as they wish.
 
@@ -75,7 +75,8 @@ Sequence    | 13 to 0  | 14 bits        | This number is incremented for every I
 ![Graphical representation of how a Snowflake is constructed](https://sxcu.net/assets/img/53fMTmLR4.png)
 
 ## API error reference
-sxcu.net uses internal error codes and an HTTP status code of 400 for any API error, instead of HTTP status codes. This gives us the ability to assign a unique code to each error, instead of having to reuse codes from a narrow selection of HTTP status codes.
+sxcu.net uses internal error codes and an HTTP status code of 400 for any API error, instead of per-error HTTP status codes. This gives us the ability to assign a unique code to each error, instead of having to reuse codes from a narrow selection of HTTP status codes.
+Each error code is specific to the endpoint it originates at, so there are some errors that have multiple error codes, but originate in different places.
 
 ### Table of errors
 Error | Message                                                                
@@ -87,7 +88,8 @@ Error | Message
 15    | value of 'private' must be boolean                                     
 16    | An error occoured while creating the collection, plese try again later 
 17    | Title too long                                                         
-18    | Description too long                                                  
+18    | Description too long 
+19    | Rate limit exceeded                                                 
 31    | Subdomain not provided                                                 
 41    | Collection ID not provided                                             
 42    | Collection token not provided                                          
@@ -112,13 +114,54 @@ Error | Message
 811   | Collection is private, valid collection token must be provided         
 812   | Collection not found                                                   
 813   | The file was not uploaded due to an unknown error                      
-814   | No file sent                                                           
+814   | No file sent
+815   | Rate limit exceeded                                                           
 91    | No host parameter sent                                                 
 101   | Link not found                                                         
 102   | File not found                                                         
 103   | Missing object ID or deletion token
+104   | Rate limit exceeded
 301   | Collection not found
-302   | No collection ID provided
+302   | No collection ID provided 
+
+## Rate Limits
+sxcu.net's API rate limits requests in order to prevent abuse and overload of our services. Rate limits are applied on a per-route basis (meaning they can be different for each route called)  Not every endpoint has an endpoint-specific ratelimit.  
+<br>
+By \"per-route\",  we mean that unique rate limits exist for the path you are accessing on our API, sometimes including the HTTP method (GET, POST) and including major parameters. This means that different HTTP methods (for example, both GET and POST) may share the same rate limit if the route is the same. Additionally, rate limits take into account major parameters in the URL. Currently, the only major parameters are file_id, collection_id, and link_id.
+<br>  
+\"Per-route\" rate limits may be shared across multiple, similar-use routes (or even the same route with a different HTTP method). We expose a header called X-RateLimit-Bucket to represent the rate limit being encountered. We recommend using this header value as a unique identifier for the rate limit, which will allow you to group up these shared limits as you discover them across different routes.
+<br>  
+Because we may change rate limits at any time and rate limits can be different per application, rate limits should not be hard coded into your application. In order to properly support our dynamic rate limits, your application should parse for our rate limits in response headers and locally prevent exceeding the limits as they change. 
+
+### Header Format
+For every API request made, we return optional HTTP response headers containing the rate limit encountered during your request. 
+ 
+#### Rate Limit Header Examples
+```text
+X-RateLimit-Limit: 5
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1626083167
+X-RateLimit-Bucket: abcd1234
+```
+
+X-RateLimit-Global  
+&nbsp;&nbsp;&nbsp;&nbsp;Returned only on a HTTP 429 response if the rate limit headers returned are of the global rate limit (not per-route)  
+<br>
+X-RateLimit-Limit  
+&nbsp;&nbsp;&nbsp;&nbsp;The number of requests that can be made
+<br>  
+X-RateLimit-Remaining  
+&nbsp;&nbsp;&nbsp;&nbsp;The number of remaining requests that can be made
+<br>  
+X-RateLimit-Reset  
+&nbsp;&nbsp;&nbsp;&nbsp;Epoch time (seconds since 00:00:00 UTC on January 1, 1970) at which the rate limit resets
+<br>  
+X-RateLimit-Reset-After  
+&nbsp;&nbsp;&nbsp;&nbsp;Total time (in seconds) of when the current rate limit bucket will reset. Can have decimals to match previous millisecond ratelimit precision
+<br>  
+X-RateLimit-Bucket  
+&nbsp;&nbsp;&nbsp;&nbsp;A unique string denoting the rate limit being encountered (non-inclusive of major parameters in the route path)  
+
 
 ## Migrating from API v1
 The new and old APIs have a few slight differences between them making them incompatible, any existing projects that use the old sxcu.net API would have to migrate before the old API gets completley removed.
@@ -139,11 +182,14 @@ All endpoints no longer return different status codes for different errors, inst
 &nbsp;&nbsp;&nbsp;&nbsp;URL changed to [/api/files/create](#post-/files/create)  
 &nbsp;&nbsp;&nbsp;&nbsp;`image` field changed to `file`  
 <br>  
-sxcu.net/{ID}.json -> URL changed to [/api/files/{fileId}](#get-/files/-fileId-)  
+sxcu.net/{fileId}.json  
+&nbsp;&nbsp;&nbsp;&nbsp;URL changed to [/api/files/{fileId}](#get-/files/-fileId-)  
+&nbsp;&nbsp;&nbsp;&nbsp;Field `img_id` changed to `id`  
+<br>  
 /d/{fileId}/{deletionToken} -> URL changed to [/api/files/delete/{fileId}/{deletionToken}](#get-/files/delete/-fileId-/-deletionToken-)   
 
 #### Collections
-sxcu.net/c/{CollectionId}.json  
+sxcu.net/c/{collectionId}.json  
 &nbsp;&nbsp;&nbsp;&nbsp;URL changed to [/api/collections/{collectionId}](#get-/collection/-collectionId-)  
 &nbsp;&nbsp;&nbsp;&nbsp;Field `img_views` changed to `file_views`  
 &nbsp;&nbsp;&nbsp;&nbsp;Field `images` changed to `files`  
@@ -153,4 +199,4 @@ Collection edit endpoint URL changed to [/api/collections/edit/{collectionId}](#
 
 #### Links
 /shorten -> URL changed to [/api/links/create](#post-/links/create)  
-/d/{linkId}/{deletionToken} -> URL changed to [/api/links/delete/{linkId}/{deletionToken}](#get-/links/delete/-linkId-/-deletionToken-)     
+/d/{linkId}/{deletionToken} -> URL changed to [/api/links/delete/{linkId}/{deletionToken}](#get-/links/delete/-linkId-/-deletionToken-)
