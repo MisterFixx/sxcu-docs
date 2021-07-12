@@ -18,22 +18,24 @@ $allEndpoints = substr($allEndpoints, 0, -2);
 $base         = str_replace("{{paths}}", $allEndpoints, $base);
 
 foreach($components as $component){
-    $content = file_get_contents($component);
-    $content = sanitizeFile($content);
-    $content = strtr($content, ["\n" => "\\n",  "\r" => "\\r"]);
-    
-    $name    = basename($component, '.md');
-    
-    $base = str_replace("{{{$name}}}", $content, $base);
+    $content = file_get_contents($component);                   
+    $content = sanitizeFile($content);    
+    $content = strtr($content, ["\n" => "\\n",  "\r" => "\\r"]);        
+    $name    = basename($component, '.md');    
+    $base    = str_replace("{{{$name}}}", $content, $base);
 }
 
 echo "Creating file...\n";
 $json = json_decode($base, true);
-echo "JSON status: ".json_last_error_msg()."\n";
 
-//$output = $base;
-$output = json_encode($json, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-file_put_contents("../swagger.json", $output);
+if(json_last_error() != 0){
+    echo "JSON status: ".json_last_error_msg()."\n";
+    echo "Aborting write.\n";
+}
+else{
+    $output = json_encode($json, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    file_put_contents("../swagger.json", $output);
+}
  
 echo "Done!\n";
 
@@ -46,7 +48,7 @@ function sanitizeFile($text){
     $text = preg_replace('#^\s*//.+$#m', '', $text);
 
     //Strip blank lines
-    $text = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $text);
+    $text = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $text); 
     
-    return $text;
+    return $text;        
 }
